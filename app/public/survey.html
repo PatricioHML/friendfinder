@@ -214,16 +214,8 @@
     <script type="text/javascript">
 
         // inicia js 
-        var config = {
-            '.chosen-select': {},
-            '.chosen-select-deselect': { allow_single_deselect: true },
-            '.chosen-select-no-single': { disable_search_threshold: 10 },
-            '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
-            '.chosen-select-width': { width: "95%" }
-        }
-        for (var selector in config) {
-            $(selector).chosen(config[selector]);
-        }
+   
+        
         $("#submit").on("click", function () {
             function validateForm() {
                 var isValid = true;
@@ -251,7 +243,7 @@
                 });
             }
             else {
-                alert("Please fill out all fields before submitting!");
+                alert("Contesta todas las preguntas EMBE");
             }
 
             return false;

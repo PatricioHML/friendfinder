@@ -1,41 +1,25 @@
-var express = require("express");
+var express = require('express');
+var bodyParser = require('body-parser');
+var path = require('path');
+
+
+
 var app = express();
-var bodyParser = require("body-parser");
+var PORT = process.env.PORT || 3000; 
 
-var PORT = 3000;
+//aquí pego todo lo de body parser con unos cambios que me dijo que hiciera el digital ta
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.text());
+app.use(bodyParser.json({type:'application/vnd.api+json'}));
 
-// aquí voy a copiar todo lo de body parser
 
-// create application/json parser
-var jsonParser = bodyParser.json()
 
-// create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+require('./app/routes/api-routes.js')(app); 
+require('./app/routes/html-routes.js')(app);
 
-// POST /login gets urlencoded bodies
-app.post('/login', urlencodedParser, function (req, res) {
-    if (!req.body) return res.sendStatus(400)
-    res.send('welcome, ' + req.body.username)
-})
 
-// POST /api/users gets JSON bodies
-app.post('/api/users', jsonParser, function (req, res) {
-    if (!req.body) return res.sendStatus(400)
-    // create user in req.body
-})
 
-// parse various different custom JSON types as JSON
-app.use(bodyParser.json({ type: 'application/*+json' }))
-
-// parse some custom thing into a Buffer
-app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }))
-
-// parse an HTML body into a string
-app.use(bodyParser.text({ type: 'text/html' }))
-
-require("./app/routes/html-routes.js") (app);
-
-app.listen(PORT, function () {
-    console.log("App listening on PORT: " + PORT);
-
+app.listen(PORT, function() {
+	console.log("App listening on PORT: " + PORT);
 });
